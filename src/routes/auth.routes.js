@@ -35,10 +35,24 @@ router.get(
   passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
+// router.get(
+//   '/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/login' }),
+//   (req, res) => {
+//     req.session.isAuthenticated = true;
+//     req.session.googleId = req.user.googleId; // Store googleId in session
+
+//     const redirectUrl = `http://localhost:3000/home?googleId=${req.user.googleId}`;
+//     res.redirect(redirectUrl);
+//   }
+// );
+
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
+    console.log('User:', req.user); // Should show user info
+    console.log('Session:', req.session); // Should show session info
     req.session.isAuthenticated = true;
     req.session.googleId = req.user.googleId; // Store googleId in session
 
@@ -47,13 +61,14 @@ router.get(
   }
 );
 
-// Route to check authentication status
 router.get('/status', (req, res) => {
+  console.log('Session Status Check:', req.session); // Debugging
   res.json({
     isAuthenticated: req.session.isAuthenticated || false,
-    googleId: req.session.googleId || req.session.userId || null, // Send googleId or userId
+    googleId: req.session.googleId || req.session.userId || null,
   });
 });
+
 
 // Logout Route
 router.post('/logout', (req, res, next) => {
