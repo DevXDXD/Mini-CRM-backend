@@ -10,8 +10,8 @@ connectDB();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
+  origin: '*',  // This allows all origins
+  credentials: true  // This is typically used with cookies or HTTP authentication, but it may be set to false if not needed
 }));
 app.use(express.json()); 
 
