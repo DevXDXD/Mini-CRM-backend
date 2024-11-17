@@ -50,16 +50,31 @@ router.get(
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    console.log('User:', req.user); // Should show user info
-    console.log('Session:', req.session); // Should show session info
-    req.session.isAuthenticated = true;
-    req.session.googleId = req.user.googleId; // Store googleId in session
+  async (req, res) => {
+    try {
+      console.log('User:', req.user); // Log user info
+      console.log('Session before modification:', req.session); // Log session state
 
-    const redirectUrl = `http://localhost:3000/home?googleId=${req.user.googleId}`;
-    res.redirect(redirectUrl);
+      if (req.user) {
+        req.session.isAuthenticated = true; // Set session as authenticated
+        req.session.googleId = req.user.googleId; // Store Google ID in the session
+
+        console.log('Session after modification:', req.session); // Confirm changes to session
+      } else {
+        console.error('User is not defined in request.');
+        return res.redirect('/login'); // Handle missing user gracefully
+      }
+
+      // Redirect to the frontend
+      const redirectUrl = `http://localhost:3000/home?googleId=${req.user.googleId}`;
+      res.redirect(redirectUrl);
+    } catch (error) {
+      console.error('Error in Google callback:', error);
+      res.redirect('/login'); // Redirect to login on failure
+    }
   }
 );
+
 
 router.get('/status', (req, res) => {
   console.log('Session Status Check:', req.session); // Debugging
