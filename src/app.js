@@ -3,7 +3,7 @@ const session = require('express-session');
 const cors = require('cors');
 const MongoStore = require('connect-mongo');
 const passport = require('./services/auth.service'); // Your Passport setup
-const connectDB = require('./config/db'); // Your MongoDB connection
+const connectDB = require('./config/db.config'); // Your MongoDB connection
 require('dotenv').config();
 
 const app = express();
