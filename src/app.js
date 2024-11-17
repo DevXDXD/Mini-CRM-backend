@@ -26,20 +26,20 @@ app.use(express.json());
 //   cookie: { secure: false } 
 // }));
 
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI, // MongoDB connection string
-    ttl: 24 * 60 * 60 // Set time to live (in seconds)
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // Enable secure cookies in production
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000, // Cookie expiration (24 hours in ms)
-  },
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI }),
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // Requires HTTPS in production
+      httpOnly: true, // Prevents client-side JS access
+      sameSite: 'none', // Required for cross-origin cookies
+    },
+  })
+);
+
 
 // Passport middleware 
 app.use(passport.initialize());
