@@ -24,7 +24,7 @@ This is a Mini CRM (Customer Relationship Management) Application developed usin
 1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/DevXDXD/project-xeno.git
+    git clone https://github.com/DevXDXD/Mini-CRM-backend.git
     ```
 
 2. **Install server dependencies**:
