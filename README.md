@@ -1,4 +1,4 @@
-# Mini CRM Application
+# Mini CRM Application (Backend)
 
 This is a Mini CRM (Customer Relationship Management) Application developed using the MERN (MongoDB, Express.js, React.js, Node.js) stack. The application provides features for ingesting customer and order data, creating audiences based on rules, sending campaigns to the defined audiences, and tracking campaign delivery statuses.
 
